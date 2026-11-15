@@ -1,0 +1,1 @@
+tw=1.00&balance=99,998.00&index=2&balance_cash=99,998.00&reel_set=0&balance_bonus=0.00&na=c&l0=0~1.00~3~1~5&stime=1794736344998&sa=LJK&sb=KJD&sh=3&st=rect&c=0.20&sw=3&sver=6&counter=4&ntp=-2.00&l=10&s=JCJCJLJKJ&w=1.00

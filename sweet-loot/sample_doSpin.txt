@@ -1,0 +1,1 @@
+tw=0.00&balance=99,998.00&index=2&balance_cash=99,998.00&balance_bonus=0.00&na=s&bl=0&stime=1794736353029&sh=6&st=rect&c=0.10&sw=6&sver=6&g={main:{reel_set:"0",s:"156864166864569aS7549a57145a56",sa:"OOOOOO",sb:"OOOOOO",sh:"5",st:"rect",sw:"6"},top:{reel_set:"8",s:"87a3",sa:"O",sb:"O",sh:"4",st:"rect",sw:"1"}}&counter=4&ntp=-2.00&l=20&s=O87a3O156864166864569aS7549a57145a56&w=0.00
