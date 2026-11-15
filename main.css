@@ -32651,3 +32651,10 @@ section.about-products .container .columns .right-column ul li {
   .uk-width-medium-1-3 { height: auto; }
   body { padding-bottom: 60px; }
 }
+
+/* Filters collapsed into a dropdown; open by default on desktop via inline script in index.html. */
+.filters-dropdown { max-width: 320px; margin: 0 auto 20px; }
+.filters-dropdown > summary { cursor: pointer; list-style: none; padding: 10px 16px; border: 1px solid #fff3; border-radius: 21px; color: #fff; font-size: 14px; font-weight: 600; text-align: center; }
+.filters-dropdown > summary::after { content: " \25BE"; }
+.filters-dropdown[open] > summary::after { content: " \25B4"; }
+.filters-dropdown[open] > summary { margin-bottom: 12px; }

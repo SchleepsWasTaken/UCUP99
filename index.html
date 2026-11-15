@@ -397,8 +397,9 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 </h3>
 			</div>
 
-			<div class="language-currency-filters language-currency-filters--with-studio">
-				<span class="filters-label">Show games in</span>
+			<details class="filters-dropdown"><summary>Show games in</summary>
+<div class="language-currency-filters language-currency-filters--with-studio">
+				
 				<div class="js-select select language-filter js-language-filter">
 					<div class="select__trigger">English</div>
 					<ul class="select__list">
@@ -1233,6 +1234,7 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 				</div>
 
 			</div>
+</details><script>matchMedia("(min-width: 768px)").matches && (document.querySelector(".filters-dropdown").open = true)</script>
 
 			<div id="js-games-list" class="games-list">
 
