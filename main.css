@@ -32645,3 +32645,9 @@ section.about-products .container .columns .right-column ul li {
   -ms-flex-pack: distribute;
   justify-content: space-around;
 }
+
+/* Mobile: theme fixes cards at 300px tall; let them fit the thumbnail. Keep last row clear of the fixed demo banner. */
+@media (max-width: 767px) {
+  .uk-width-medium-1-3 { height: auto; }
+  body { padding-bottom: 60px; }
+}
