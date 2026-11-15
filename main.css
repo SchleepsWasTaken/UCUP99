@@ -32658,3 +32658,14 @@ section.about-products .container .columns .right-column ul li {
 .filters-dropdown > summary::after { content: " \25BE"; }
 .filters-dropdown[open] > summary::after { content: " \25B4"; }
 .filters-dropdown[open] > summary { margin-bottom: 12px; }
+
+/* Game fullscreen: fixed overlay (works where the Fullscreen API doesn't, e.g. iPhone). */
+.game-fullscreen.fullscreen { position: fixed !important; inset: 0; z-index: 100000; background: #000; padding: 0; width: auto; }
+.game-fullscreen.fullscreen .game-details__iframe-container { position: absolute !important; inset: 0 0 44px; height: auto; padding: 0 !important; }
+.game-fullscreen.fullscreen iframe { width: 100% !important; height: 100% !important; }
+body.game-fs { overflow: hidden; }
+body.game-fs [role=note] { display: none; }
+/* Phone held upright: rotate the game sideways (Android locks orientation instead when it can). */
+@media (orientation: portrait) and (max-width: 767px) {
+  .game-fullscreen.fullscreen { inset: auto; top: 0; left: 100vw; width: 100vh; height: 100vw; transform: rotate(90deg); transform-origin: top left; }
+}

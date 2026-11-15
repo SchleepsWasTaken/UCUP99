@@ -12479,77 +12479,42 @@ var field = $("[data-custom-search-field]"),
       };
     return { init: i };
   })()),
+  // Rewritten: original exited right after entering (resize check vs screen.height) and only
+  // knew non-standard requestFullScreen. Mobile: lock landscape where allowed (Android);
+  // otherwise CSS rotates the game while the phone is portrait (iOS has no element fullscreen).
   (GP_APP.modules.fullScreenIframe = (function () {
-    var e = $("[data-fullscreen]").get(0),
-      t = $(e).find("[data-buttons]");
-    $(window).on("keydown", function (e) {
-      27 == e.keyCode && s(t);
-    });
-    var i = navigator.userAgent.toLowerCase();
-    i.indexOf("safari") != -1 && i.indexOf("chrome") > -1;
-    var n = function () {
-        null != t &&
-          void 0 != t &&
-          null != e &&
-          void 0 != e &&
-          t.on("click", function (t) {
-            var i = $(t.currentTarget),
-              n = e;
-            if ($(e).hasClass("fullscreen")) s(i, e);
-            else {
-              (setTimeout(o, 1),
-                $(e).addClass("fullscreen"),
-                i.find("[data-close]").show(),
-                i.find("[data-open]").hide(),
-                n.requestFullScreen
-                  ? n.requestFullScreen()
-                  : n.mozRequestFullScreen
-                    ? n.mozRequestFullScreen()
-                    : n.webkitRequestFullScreen
-                      ? n.webkitRequestFullScreen()
-                      : n.msRequestFullScreen && n.msRequestFullScreen());
-              var a = window.outerHeight,
-                r = window.outerWidth;
-              i.height();
-              $(e)
-                .find("iframe")
-                .css({ width: r + "px", height: a + "px" });
-            }
-            ($(window).off("resize"),
-              $(window).on("resize", function () {
-                window.setTimeout(function () {
-                  screen.height !== window.innerHeight && s(i);
-                }, 100);
-              }));
-          });
+    var box = $("[data-fullscreen]"),
+      btns = box.find("[data-buttons]"),
+      fsEl = function () { return document.fullscreenElement || document.webkitFullscreenElement; },
+      set = function (on) {
+        box.toggleClass("fullscreen", on);
+        btns.find("[data-close]").toggle(on);
+        btns.find("[data-open]").toggle(!on);
+        $("body").toggleClass("game-fs", on);
+        box.find("iframe").focus();
       },
-      s = function (t) {
-        (t.find("[data-close]").hide(),
-          t.find("[data-open]").show(),
-          document.exitFullscreen
-            ? document.exitFullscreen()
-            : document.mozExitFullscreen
-              ? document.mozExitFullscreen()
-              : document.mozCancelFullscreen
-                ? document.mozCancelFullscreen()
-                : document.webkitExitFullscreen
-                  ? document.webkitExitFullscreen()
-                  : document.webkitCancelFullscreen
-                    ? document.webkitCancelFullscreen()
-                    : document.msExitFullscreen && document.msExitFullscreen(),
-          $(e).removeClass("fullscreen"),
-          $(e).find("iframe").css({ width: "100%", height: "100%" }).focus());
+      open = function () {
+        set(true);
+        var el = box[0],
+          req = el.requestFullscreen || el.webkitRequestFullscreen;
+        Promise.resolve(req && req.call(el))
+          .then(function () { return screen.orientation && screen.orientation.lock("landscape"); })
+          .catch(function () {});
       },
-      o = function () {
-        try {
-          var e = $("iframe");
-          e[0].contentWindow.focus();
-        } catch (t) {}
-      },
-      a = function () {
-        n();
+      close = function () {
+        set(false);
+        try { screen.orientation.unlock(); } catch (e) {}
+        if (fsEl()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
       };
-    return { init: a };
+    return {
+      init: function () {
+        btns.find("[data-open]").on("click", open);
+        btns.find("[data-close]").on("click", close);
+        $(document).on("fullscreenchange webkitfullscreenchange", function () {
+          if (!fsEl() && box.hasClass("fullscreen")) close(); // left via Esc / back gesture
+        });
+      },
+    };
   })()),
   (GP_APP.modules.gameTypeFilter = (function () {
     var e = $(".js-game-type-filter"),
